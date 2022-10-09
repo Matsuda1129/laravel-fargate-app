@@ -10,7 +10,7 @@ RUN apk update && \
 
 RUN apk add --update --no-cache --repository http://nl.alpinelinux.org/alpine/edge/main libstdc++
 # RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt update && apt install -y nodejs
+# RUN apt update && apt install -y nodejs
 # node command
 COPY --from=node /usr/local/bin /usr/local/bin
 # npm command
