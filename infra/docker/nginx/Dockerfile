@@ -5,9 +5,12 @@ SHELL ["/bin/ash", "-oeux", "pipefail", "-c"]
 
 ENV TZ=UTC
 
-RUN apk update && \
-  apk add --update --no-cache --virtual=.build-dependencies g++
+# RUN apk update && \
+#   apk add --update --no-cache --virtual=.build-dependencies g++
 
+# RUN apk add --update --no-cache --repository http://nl.alpinelinux.org/alpine/edge/main libstdc++
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt update && apt install -y nodejs
 # node command
 COPY --from=node /usr/local/bin /usr/local/bin
 # npm command
