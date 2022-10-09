@@ -61,6 +61,12 @@ jobs:
       # - run: docker-compose exec -T web npm run prod
 
       - uses: aws-actions/amazon-ecr-login@v1
+        with:
+            aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ env.AWS_REGION }}
+            role-to-assume: ${{ secrets.PROD_AWS_ASSUME_ROLE_ARN }}
+            role-duration-seconds: 1800
         id: amazon-ecr-login
 
       - name: Push nginx image to ecr
