@@ -29,11 +29,11 @@ jobs:
           role-duration-seconds: 1800
       
 
-      # - name: Set env vars for prod
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     echo "ENV_NAME=prod" >> $GITHUB_ENV
-      # #     echo "VPC_CIDR=172.31.0.0/16" >> $GITHUB_ENV
+      - name: Set env vars for prod
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "ENV_NAME=prod" >> $GITHUB_ENV
+      #     echo "VPC_CIDR=172.31.0.0/16" >> $GITHUB_ENV
 
       # - uses: actions/checkout@v2
 
