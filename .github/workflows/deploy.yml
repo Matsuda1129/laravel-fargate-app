@@ -8,9 +8,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-1
-  # IMAGE_TAG: ${{ github.sha }}
-  # SYSTEM_NAME: example
-  # SERVICE_NAME: foobar
+  IMAGE_TAG: ${{ github.sha }}
+  SYSTEM_NAME: example
+  SERVICE_NAME: foobar
 
 jobs:
   deploy:
@@ -73,9 +73,9 @@ jobs:
           docker build \
             --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg BUILDKIT_INLINE_CACHE=1 . \
             -f infra/docker/nginx/Dockerfile \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         # run: |
         #   docker build -t $ECR_REPOSITORY:latest -f ./infra/docker/nginx/Dockerfile .
