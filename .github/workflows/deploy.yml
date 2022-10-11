@@ -59,7 +59,7 @@ jobs:
       - run: docker-compose exec -T web npm ci
         if: ${{ !steps.cache-npm-ci.outputs.cache-hit }}
 
-      - run: docker-compose exec -T web npm run prod
+      # - run: docker-compose exec -T web npm run prod
 
       - uses: aws-actions/amazon-ecr-login@v1
         id: amazon-ecr-login
@@ -72,7 +72,7 @@ jobs:
         run: |
           docker build \
             --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg BUILDKIT_INLINE_CACHE=1 . \
-            -f /infra/docker/nginx/Dockerfile \
+            -f /infra/docker/nginx/Dockerfile . \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
