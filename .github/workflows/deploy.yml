@@ -70,7 +70,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.amazon-ecr-login.outputs.registry }}
           ECR_REPOSITORY: ${{ env.SYSTEM_NAME }}-${{ env.ENV_NAME }}-${{ env.SERVICE_NAME }}-nginx
         run: |
-          docker build \
+          sudo docker build \
             --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg BUILDKIT_INLINE_CACHE=1 . \
             -f infra/docker/nginx/Dockerfile \
             -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
