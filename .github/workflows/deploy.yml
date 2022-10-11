@@ -27,6 +27,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ secrets.PROD_AWS_ASSUME_ROLE_ARN }}
           role-duration-seconds: 1800
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        run: |
+          echo ${{ secrets.PROD_AWS_ASSUME_ROLE_ARN }}
 
       - name: Set env vars for prod
         if: github.ref == 'refs/heads/main'
@@ -60,8 +66,8 @@ jobs:
 
       # - run: docker-compose exec -T web npm run prod
 
-      - uses: aws-actions/amazon-ecr-login@v1
-        id: amazon-ecr-login
+      # - uses: aws-actions/amazon-ecr-login@v1
+      #   id: amazon-ecr-login
       # - name: Login to Amazon ECR
       #   id: login-ecr
       #   uses: aws-actions/amazon-ecr-login@v1
