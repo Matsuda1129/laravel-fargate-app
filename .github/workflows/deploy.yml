@@ -64,18 +64,18 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v1
         id: amazon-ecr-login
 
-      - name: Push nginx image to ecr
-        env:
-          DOCKER_BUILDKIT: 1
-          ECR_REGISTRY: ${{ steps.amazon-ecr-login.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.SYSTEM_NAME }}-${{ env.ENV_NAME }}-${{ env.SERVICE_NAME }}-nginx
-        run: |
-          docker build \
-            -f ./infra/docker/nginx/Dockerfile . \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
-            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      # - name: Push nginx image to ecr
+      #   env:
+      #     DOCKER_BUILDKIT: 1
+      #     ECR_REGISTRY: ${{ steps.amazon-ecr-login.outputs.registry }}
+      #     ECR_REPOSITORY: ${{ env.SYSTEM_NAME }}-${{ env.ENV_NAME }}-${{ env.SERVICE_NAME }}-nginx
+      #   run: |
+      #     docker build \
+      #       -f ./infra/docker/nginx/Dockerfile . \
+      #       -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+      #       -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         # run: |
         #   docker build -t $ECR_REPOSITORY:latest -f ./infra/docker/nginx/Dockerfile .
         #   docker push $ECR_REPOSITORY:latest
