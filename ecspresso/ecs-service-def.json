@@ -25,18 +25,18 @@
     {
       "containerName": "nginx",
       "containerPort": 80,
-      "targetGroupArn": "{{ tfstate 'data.aws_lb_target_group.this.arn'}}"
+      "targetGroupArn": "{{ tfstate `data.aws_lb_target_group.this.arn`}}"
     }
   ],
   "networkConfiguration": {
     "awsvpcConfiguration": {
       "assignPublicIp": "DISABLED",
       "securityGroups": [
-        "{{ tfstate 'data.aws_security_group.vpc.id'}}"
+        "{{ tfstate `data.aws_security_group.vpc.id`}}"
       ],
       "subnets": [
-        "{{ tfstate 'data.aws_subnet.private['a'].id'}}",
-        "{{ tfstate 'data.aws_subnet.private['c'].id'}}"
+        "{{ tfstate `data.aws_subnet.private['a'].id`}}",
+        "{{ tfstate `data.aws_subnet.private['c'].id`}}"
       ]
     }
   },
@@ -49,15 +49,15 @@
   "tags": [
     {
       "key": "Env",
-      "value": "{{must_env 'ENV_NAME'}}"
+      "value": "{{must_env `ENV_NAME`}}"
     },
     {
       "key": "System",
-      "value": "{{ must_env 'SYSTEM_NAME'}}"
+      "value": "{{ must_env `SYSTEM_NAME`}}"
     },
     {
       "key": "Name",
-      "value": "{{must_env 'SYSTEM_NAME'}}-{{ must_env 'ENV_NAME'}}-{{ must_env 'SERVICE_NAME'}}"
+      "value": "{{must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}"
     }
   ]
 }
