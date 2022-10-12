@@ -61,8 +61,8 @@ jobs:
 
       # # - run: docker-compose exec -T web npm run prod
 
-      # - uses: aws-actions/amazon-ecr-login@v1
-      #   id: amazon-ecr-login
+      - uses: aws-actions/amazon-ecr-login@v1
+        id: amazon-ecr-login
 
       # - name: Push nginx image to ecr
       #   env:
