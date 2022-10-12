@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/push_images_to_ecr
+      - feature/deploy_fargate
 
 env:
   AWS_REGION: ap-northeast-1
@@ -96,14 +96,14 @@ jobs:
       #   run: aws s3 cp .env.$ENV_NAME s3://shonansurvivors-$SYSTEM_NAME-$ENV_NAME-$SERVICE_NAME-env-file/$IMAGE_TAG/.env
       #   working-directory: backend
 
-      # - name: Download ecspresso
-      #   uses: kayac/ecspresso@v0
-      #   with:
-      #     version: v1.5.3
+      - name: Download ecspresso
+        uses: kayac/ecspresso@v0
+        with:
+          version: v1.5.3
 
-      # - name: Register task definition
-      #   run: ecspresso register --config config_$ENV_NAME.yaml
-      #   working-directory: ./ecspresso
+      - name: Register task definition
+        run: ecspresso register --config config_$ENV_NAME.yaml
+        working-directory: ./ecspresso
 
       # - name: Migrate database
       #   run: |

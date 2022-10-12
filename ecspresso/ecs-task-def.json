@@ -2,20 +2,30 @@
   "containerDefinitions": [
     {
       "cpu": 0,
+      "dependsOn": [
+        {
+          "condition": "START",
+          "containerName": "php"
+        }
+      ],
       "environment": [],
       "essential": true,
-      "image": "762259793693.dkr.ecr.ap-northeast-1.amazonaws.com/laravel_ecr",
+      "image": "762259793693.dkr.ecr.ap-northeast-1.amazonaws.com/example-prod-foobar-nginx:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/laravel-task",
-          "awslogs-region": "ap-northeast-1",
+          "awslogs-group": "{{ tfstate 'data.aws_cloudwatch_log_group.nginx.name'}}",
+          "awslogs-region": "{{ must_env 'AWS_REGION'}}",
           "awslogs-stream-prefix": "ecs"
         }
       },
-      "memoryReservation": 128,
-      "mountPoints": [],
-      "name": "laravel-ecr",
+      "mountPoints": [
+        {
+          "containerPath": "/var/run/php-fpm",
+          "sourceVolume": "php-fpm-socket"
+        }
+      ],
+      "name": "nginx",
       "portMappings": [
         {
           "containerPort": 80,
@@ -23,20 +33,67 @@
           "protocol": "tcp"
         }
       ],
+      "secrets": [],
+      "volumesFrom": []
+    },
+    {
+      "cpu": 0,
+      "environment": [],
+      "essential": true,
+      "image": "{{ tfstate 'data.aws_ecr_repository.php.repository_url'}}:{{ must_env 'IMAGE_TAG'}}",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "{{ tfstate 'data.aws_cloudwatch_log_group.php.name'}}",
+          "awslogs-region": "{{ must_env 'AWS_REGION'}}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "containerPath": "/var/run/php-fpm",
+          "sourceVolume": "php-fpm-socket"
+        }
+      ],
+      "name": "php",
+      "portMappings": [],
+      "secrets": [
+        {
+          "name": "APP_KEY",
+          "valueFrom": "/{{ must_env 'SYSTEM_NAME'}}/{{ must_env 'ENV_NAME'}}/{{must_env 'SERVICE_NAME'}}/APP_KEY"
+        }
+      ],
       "volumesFrom": []
     }
   ],
   "cpu": "256",
-  "executionRoleArn": "arn:aws:iam::762259793693:role/ecsTaskExecutionRole",
-  "family": "laravel-task",
+  "executionRoleArn": "{{tfstate 'data.aws_iam_role.ecs_task_execution.arn'}}",
+  "family": "{{must_env 'SYSTEM_NAME'}}-{{ must_env 'ENV_NAME'}}-{{ must_env 'SERVICE_NAME'}}",
   "memory": "512",
   "networkMode": "awsvpc",
   "placementConstraints": [],
   "requiresCompatibilities": [
     "FARGATE"
   ],
-  "runtimePlatform": {
-    "operatingSystemFamily": "LINUX"
-  },
-  "volumes": []
+  "tags": [
+    {
+      "key": "Env",
+      "value": "{{must_env 'ENV_NAME'}}"
+    },
+    {
+      "key": "System",
+      "value": "{{ must_env 'SYSTEM_NAME'}}"
+    },
+    {
+      "key": "Name",
+      "value": "{{must_env 'SYSTEM_NAME'}}-{{ must_env 'ENV_NAME'}}-{{ must_env 'SERVICE_NAME'}}"
+    }
+  ],
+  "taskRoleArn": "{{tfstate 'data.aws_iam_role.ecs_task.arn'}}",
+  "volumes": [
+    {
+      "host": {},
+      "name": "php-fpm-socket"
+    }
+  ]
 }
