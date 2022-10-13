@@ -99,7 +99,7 @@ jobs:
       - name: Download ecspresso
         uses: kayac/ecspresso@v0
         with:
-          version: v1.7.3
+          version: latest
 
       - name: Register task definition
         run: ecspresso register --config config_$ENV_NAME.yaml
