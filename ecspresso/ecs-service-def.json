@@ -14,6 +14,9 @@
     "maximumPercent": 200,
     "minimumHealthyPercent": 100
   },
+  "deploymentController": {
+    "type": "ECS"
+  },
   "desiredCount": 1,
   "enableECSManagedTags": false,
   "enableExecuteCommand": true,

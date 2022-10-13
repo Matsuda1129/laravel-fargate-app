@@ -114,5 +114,6 @@ jobs:
         working-directory: ./ecspresso
 
       - name: Deploy to ecs
+    
         run: ecspresso deploy --config config_$ENV_NAME.yaml --latest-task-definition
         working-directory: ./ecspresso
