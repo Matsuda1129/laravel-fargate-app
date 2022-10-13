@@ -66,8 +66,8 @@ services:
       - MYSQL_PASSWORD=${DB_PASS:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
   
-  networks:
-    default:
-      ipam:
-        config:
-          - subnet:${VPC_CIDR:-172.31.0.0/16}
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${VPC_CIDR:-172.32.0.0/16}
