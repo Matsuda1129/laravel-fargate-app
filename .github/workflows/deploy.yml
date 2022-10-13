@@ -97,7 +97,7 @@ jobs:
       #   working-directory: backend
 
       - name: Download ecspresso
-        uses: kayac/ecspresso@v0
+        uses: kayac/ecspresso@v1
         with:
           version: latest
 
