@@ -17,7 +17,7 @@
       "environmentFiles":[
         {
           "type":"s3",
-          "value":"{{ tfstate `data.aws_s3_bucket.env_file.url`}}/{{ must_env `IMAGE_TAG`}}/.env"
+          "value":"{{ tfstate `data.aws_s3_bucket.env_file.arn`}}/{{ must_env `IMAGE_TAG`}}/.env"
         }
       ],
       "essential": true,
