@@ -50,15 +50,19 @@
   "tags": [
     {
       "key": "Env",
-      "value": "{{must_env `ENV_NAME`}}"
+      "value": "{{ must_env `ENV_NAME`}}"
     },
     {
       "key": "System",
       "value": "{{ must_env `SYSTEM_NAME`}}"
     },
     {
+      "key": "Service",
+      "value": "{{ must_env `SERVICE_NAME`}}"
+    },
+    {
       "key": "Name",
-      "value": "{{must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}"
+      "value": "{{ must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}"
     }
   ]
 }

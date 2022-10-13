@@ -47,11 +47,11 @@
       "secrets": [
         {
           "name":"APP_KEY",
-          "valueFrom":"/{{must_env`SYSTEM_NAME`}}/{{must_env`ENV_NAME`}}/{{must_env`SERVICE_NAME`}}/APP_KEY"
+          "valueFrom":"/{{must_env `SYSTEM_NAME`}}/{{must_env `ENV_NAME`}}/{{must_env `SERVICE_NAME`}}/APP_KEY"
         },
         {
           "name":"DB_PASSWORD",
-          "valueFrom":"/{{must_env`SYSTEM_NAME`}}/{{must_env`ENV_NAME`}}/{{must_env`SERVICE_NAME`}}/DB_PASSWORD"
+          "valueFrom":"/{{must_env `SYSTEM_NAME`}}/{{must_env `ENV_NAME`}}/{{must_env `SERVICE_NAME`}}/DB_PASSWORD"
         }
       ],
       "volumesFrom": []
@@ -89,7 +89,7 @@
   ],
   "cpu": "256",
   "executionRoleArn": "{{tfstate `data.aws_iam_role.ecs_task_execution.arn`}}",
-  "family": "{{must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}",
+  "family": "{{ must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}",
   "memory": "512",
   "networkMode": "awsvpc",
   "placementConstraints": [],
@@ -99,7 +99,7 @@
   "tags": [
     {
       "key": "Env",
-      "value": "{{must_env `ENV_NAME`}}"
+      "value": "{{ must_env `ENV_NAME`}}"
     },
     {
       "key": "System",
@@ -107,7 +107,7 @@
     },
     {
       "key": "Name",
-      "value": "{{must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}"
+      "value": "{{ must_env `SYSTEM_NAME`}}-{{ must_env `ENV_NAME`}}-{{ must_env `SERVICE_NAME`}}"
     }
   ],
   "taskRoleArn": "{{tfstate `data.aws_iam_role.ecs_task.arn`}}",
